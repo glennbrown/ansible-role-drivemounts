@@ -18,12 +18,11 @@ This role configures and optionally mounts drives on Debian-based Linux systems 
 
 ### Drive Configuration Structure
 
-The role uses a list variable `drive_mounts` to configure all mount points. Each item in the list is a dictionary containing the disk identifier and its configuration.
+The role uses a list variable `drive_mounts` to configure all mount points. Each item in the list contains the drive configuration.
 
 ```yaml
 drive_mounts:
-  - name: disk1
-    mountpoint: "/mnt/disk1"
+  - mountpoint: "/mnt/disk1"
     device: "/dev/disk/by-id/ata-WDC_WD180EDGZ-11B9PA0_2TGGDS5Z-part1"
     fstype: "btrfs"
     options: 
@@ -34,7 +33,6 @@ Each drive definition can have the following properties:
 
 | Property | Description | Required | Default |
 |----------|-------------|----------|---------|
-| name | Identifier for the disk (e.g., disk1, backup) | Yes | - |
 | mountpoint | Mount path for the drive | Yes | - |
 | device | The device to mount (path, UUID, LABEL, etc.) | Yes | - |
 | fstype | The filesystem type | Yes | - |
@@ -48,15 +46,13 @@ Each drive definition can have the following properties:
     automount_drives: true  # Set to false to only configure fstab without mounting
     
     drive_mounts:
-      - name: disk1
-        mountpoint: "/mnt/disk1"
+      - mountpoint: "/mnt/disk1"
         device: "/dev/disk/by-id/ata-WDC_WD180EDGZ-11B9PA0_2TGGDS5Z-part1"
         fstype: "btrfs"
         options: 
           - "subvol=data"
       
-      - name: backup
-        mountpoint: "/backup"
+      - mountpoint: "/backup"
         device: "/dev/sdb1"
         fstype: "ext4"
         options:
