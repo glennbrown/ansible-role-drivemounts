@@ -3,22 +3,22 @@
 
 - name: Ensure mount directories exist
   ansible.builtin.file:
-    path: "{{ item.target }}"
+    path: "{{ item.mountpoint }}"
     state: directory
     mode: "0755"
   loop: "{{ drive_mounts }}"
   loop_control:
-    label: "{{ item.diskid }}"
+    label: "{{ item.mountpoint }}"
   when: drive_mounts is defined
 
 - name: Configure drives in fstab
   ansible.builtin.mount:
-    path: "{{ item.target }}"
+    path: "{{ item.mountpoint }}"
     src: "{{ item.device }}"
-    fstype: "{{ item.fsType }}"
+    fstype: "{{ item.fstype }}"
     opts: "{{ item.options | default(['defaults']) | join(',') }}"
     state: "{{ (automount_drives | bool) | ternary('mounted', 'present') }}"
   loop: "{{ drive_mounts }}"
   loop_control:
-    label: "{{ item.diskid }}"
+    label: "{{ item.mountpoint }}"
   when: drive_mounts is defined

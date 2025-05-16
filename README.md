@@ -22,10 +22,10 @@ The role uses a list variable `drive_mounts` to configure all mount points. Each
 
 ```yaml
 drive_mounts:
-  - diskid: disk1
-    target: "/mnt/disk1"
+  - name: disk1
+    mountpoint: "/mnt/disk1"
     device: "/dev/disk/by-id/ata-WDC_WD180EDGZ-11B9PA0_2TGGDS5Z-part1"
-    fsType: "btrfs"
+    fstype: "btrfs"
     options: 
       - "subvol=data"
 ```
@@ -34,10 +34,10 @@ Each drive definition can have the following properties:
 
 | Property | Description | Required | Default |
 |----------|-------------|----------|---------|
-| diskid | Identifier for the disk (e.g., disk1, backup) | Yes | - |
-| target | Mount path for the drive | Yes | - |
+| name | Identifier for the disk (e.g., disk1, backup) | Yes | - |
+| mountpoint | Mount path for the drive | Yes | - |
 | device | The device to mount (path, UUID, LABEL, etc.) | Yes | - |
-| fsType | The filesystem type | Yes | - |
+| fstype | The filesystem type | Yes | - |
 | options | List of mount options | No | ["defaults"] |
 
 ## Example Playbook
@@ -48,17 +48,17 @@ Each drive definition can have the following properties:
     automount_drives: true  # Set to false to only configure fstab without mounting
     
     drive_mounts:
-      - diskid: disk1
-        target: "/mnt/disk1"
+      - name: disk1
+        mountpoint: "/mnt/disk1"
         device: "/dev/disk/by-id/ata-WDC_WD180EDGZ-11B9PA0_2TGGDS5Z-part1"
-        fsType: "btrfs"
+        fstype: "btrfs"
         options: 
           - "subvol=data"
       
-      - diskid: backup
-        target: "/backup"
+      - name: backup
+        mountpoint: "/backup"
         device: "/dev/sdb1"
-        fsType: "ext4"
+        fstype: "ext4"
         options:
           - "defaults"
           - "noatime"
@@ -70,3 +70,7 @@ Each drive definition can have the following properties:
 ## License
 
 MIT
+
+## Author Information
+
+This role was created by the IB Team.
