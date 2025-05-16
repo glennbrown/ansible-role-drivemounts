@@ -1,0 +1,24 @@
+---
+# tasks file for ansible-role-drivemounts
+
+- name: Ensure mount directories exist
+  ansible.builtin.file:
+    path: "{{ item.target }}"
+    state: directory
+    mode: "0755"
+  loop: "{{ drive_mounts }}"
+  loop_control:
+    label: "{{ item.diskid }}"
+  when: drive_mounts is defined
+
+- name: Configure drives in fstab
+  ansible.builtin.mount:
+    path: "{{ item.target }}"
+    src: "{{ item.device }}"
+    fstype: "{{ item.fsType }}"
+    opts: "{{ item.options | default(['defaults']) | join(',') }}"
+    state: "{{ (automount_drives | bool) | ternary('mounted', 'present') }}"
+  loop: "{{ drive_mounts }}"
+  loop_control:
+    label: "{{ item.diskid }}"
+  when: drive_mounts is defined
