@@ -70,7 +70,3 @@ Each drive definition can have the following properties:
 ## License
 
 MIT
-
-## Author Information
-
-This role was created by the IB Team.
