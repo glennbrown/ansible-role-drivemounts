@@ -38,6 +38,26 @@ Each drive definition can have the following properties:
 | fstype | The filesystem type | Yes | - |
 | options | List of mount options | No | ["defaults"] |
 
+## Special Filesystems
+
+### MergerFS Configuration
+
+This role supports configuring MergerFS mounts. MergerFS is a union filesystem that allows you to pool multiple storage devices.
+The role will automatically install MergerFS when needed.
+
+Example configuration:
+
+```yaml
+drive_mounts:
+  - mountpoint: "/mnt/jbod"
+    device: "/mnt/disks/disk*"
+    fstype: "mergerfs"
+    options:
+      - "defaults"
+      - "minfreespace=250G"
+      - "fsname=mergerfs-jbod"
+```
+
 ## Example Playbook
 
 ```yaml
